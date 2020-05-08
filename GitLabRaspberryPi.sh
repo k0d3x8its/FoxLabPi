@@ -87,7 +87,7 @@ free -m
 curl -Lo gitlab-ce_12.6.2-ce.0_armhf.deb https://packages.gitlab.com/gitlab/raspberry-pi2/packages/raspbian/stretch/gitlab-ce_12.6.2-ce.0_armhf.deb/download.deb
 
 # install the downloaded package
-sudo apt install ./gitlab-ce_12.6.2-ce.0_armhf.deb
+sudo apt dpkg -i gitlab-ce_12.6.2-ce.0_armhf.deb
 
 # modify gitlab.rb configuration
 sudo nano /etc/gitlab/gitlab.rb
