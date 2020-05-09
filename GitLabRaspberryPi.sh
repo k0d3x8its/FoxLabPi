@@ -39,29 +39,29 @@ hostname
 
 ##################  mount USB Stick (RECOMMENDED STEP) ##################
 
-# creates a directory for the USB Stick
-sudo mkdir /media/usbstick
+# creates a directory for the USB Storage
+sudo mkdir /media/foxlab
 
 # change owner
-sudo chown pi /media/usbstick
+sudo chown pi /media/foxlab
 
 # show devices
 sudo fdisk -l
 
-# format the usb stick in EXT4 
+# format the USB Storage in EXT4 
 sudo mkfs.ext4 /dev/sda1 
 
-# mount the USB stick
-sudo mount /dev/sda1 /media/usbstick
+# mount the USB Storage
+sudo mount /dev/sda1 /media/foxlab
 
-# get the USB stick UUID (Universally Unique Identifier)
+# get the USB Storage UUID (Universally Unique Identifier)
 sudo blkid
 
 # edit fstab
 sudo nano /etc/fstab
 
-	# add automount USB stick on startup 
-	UUID=a322538a-2390-4d4f-b13a-7f057b4f2117  /media/usbstick  ext4  defaults  0  0
+	# add automount USB Storage on startup 
+	UUID=a322538a-2390-4d4f-b13a-7f057b4f2117  /media/foxlab  ext4  defaults  0  0
 
 
 
