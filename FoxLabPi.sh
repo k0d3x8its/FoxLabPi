@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#This shell script is meant to automate MikrocontollerProjekte's instructions for installing GitLab CE on Raspberry Pi 4
+#This shell script is meant to automate MikrocontollerProjekte's 
+#instructions for installing GitLab CE on Raspberry Pi 4 (4GB)
 
 #colors
 RED='\e[38;5;196m'        #red
@@ -15,22 +16,44 @@ BLINK='\e[5m'             #blink text
 clear                     #clear the screen
 
 #FoxLabPi ASCII Art
-echo -e "\e[38;5;208m         *.                  *."
-echo -e "\e[38;5;208m        ***                 ***"
-echo -e "\e[38;5;208m       *****               *****"
-echo -e "\e[38;5;208m      .******             *******"
-echo -e "\e[38;5;208m      ********            ********"
-echo -e "\e[38;5;208m     ,,,,,,,,,***********,,,,,,,,,"
-echo -e "\e[38;5;208m    ,,,,,,,,,,,*********,,,,,,,,,,,"
-echo -e "\e[38;5;208m    .,,,,,,,,,,,*******,,,,,,,,,,,,"
-echo -e "\e[38;5;208m        ,,,,,,,,,*****,,,,,,,,,."
-echo -e "\e[38;5;208m           ,,,,,,,****,,,,,,"
-echo -e "\e[38;5;208m              .,,,***,,,,"
-echo -e "\e[38;5;208m                  ,*,."
+echo -e ${ORANGE}"            *.                  *."
+echo -e ${ORANGE}"           ***                 ***"
+echo -e ${ORANGE}"          *****               *****"
+echo -e ${ORANGE}"         .******             *******"
+echo -e ${ORANGE}"         ********            ********"
+echo -e ${ORANGE}"        ,,,,,,,,,***********,,,,,,,,,"
+echo -e ${ORANGE}"       ,,,,,,,,,,,*********,,,,,,,,,,,"
+echo -e ${ORANGE}"       .,,,,,,,,,,,*******,,,,,,,,,,,,"
+echo -e ${ORANGE}"           ,,,,,,,,,*****,,,,,,,,,."
+echo -e ${ORANGE}"              ,,,,,,,****,,,,,,"
+echo -e ${ORANGE}"                 .,,,***,,,,"
+echo -e ${ORANGE}"                     ,*,."
 
-echo -e "\e[38;5;208m    ___           __       _         \e[38;5;196m___ _"
-echo -e "\e[38;5;208m   / __\____  __ / /  __ _| |__     \e[38;5;196m/ _ (_)"
-echo -e "\e[38;5;208m  / _\/ _ \ \/ // /  / _  |  _ \   \e[38;5;196m/ /_)/ |"
-echo -e "\e[38;5;208m / / | (_) >  </ /__| (_| | |_) | \e[38;5;196m/ ___/| |"
-echo -e "\e[38;5;208m \/   \___/_/\_\____/\__,_|_.__/  \e[38;5;196m\/    |_|"
+echo -e ${ORANGE}"    ___           __       _         ${RED}___ _"
+echo -e ${ORANGE}"   / __\____  __ / /  __ _| |__     ${RED}/ _ (_)"
+echo -e ${ORANGE}"  / _\/ _ \ \/ // /  / _  |  _ \   ${RED}/ /_)/ |"
+echo -e ${ORANGE}" / / | (_) >  </ /__| (_| | |_) | ${RED}/ ___/| |"
+echo -e ${ORANGE}" \/   \___/_/\_\____/\__,_|_.__/  ${RED}\/    |_|"${NT}
+
+#################
+### functions ###
+#################
+
+#this will return the user to the menu
+pause()
+{
+    read -p "Press [Enter] to continue down the foxhole..."
+}
+
+#this choice will allow the script to update system
+updateSystem()
+{
+    echo "update system packages (optional)"
+}
+
+#this choice will allow the script to change hostname and password
+hostnameChange()
+{
+    echo ""
+}
 
