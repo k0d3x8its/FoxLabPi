@@ -37,7 +37,7 @@ hostname
 
 
 
-##################  mount USB Stick (RECOMMENDED STEP) ##################
+##################  mount USB Storage (RECOMMENDED STEP) ##################
 
 # creates a directory for the USB Storage
 sudo mkdir /media/foxlab
@@ -55,7 +55,7 @@ sudo mkfs.ext4 /dev/sda1
 sudo mount /dev/sda1 /media/foxlab
 
 # get the USB Storage UUID (Universally Unique Identifier)
-sudo blkid
+sudo blkid /dev/sda1
 
 # edit fstab
 sudo nano /etc/fstab
