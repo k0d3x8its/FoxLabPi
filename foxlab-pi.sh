@@ -37,11 +37,52 @@ updateSystem()
     pause 
 }
 
-#this choice will allow the script to change hostname and password
+#this choice will allow the script to change hostname
 hostnameChange()
 {
-    echo "Hostname Change"
+    local userChoice=$1
+    local userHostname=$(hostname)
 
+    echo "Your existing hostname is:" `hostname`
+    sleep 1
+    read -p "Type what you want your hostname to be: " userChoice
+    hostnamectl set-hostname $userChoice
+    sleep 1
+    echo "Hostname set"
+    sleep 1
+    echo "changing /etc/hosts..."
+    sleep 1
+    sudo sed -i "s/$userHostname/$userChoice/g" /etc/hosts
+    sleep 1
+    echo "Checking status..."
+    sleep 1.5
+    
+    echo -e ${ORANGE}"#####################################"
+    echo -e ${ORNAGE}"    ${BOLD}---+++--- hostname ---+++---"${NT}
+    echo -e ${ORANGE}"#####################################"${NT}
+    hostnamectl status | grep host*
+    echo -e ${ORANGE}"#####################################"
+    echo -e ${ORNAGE}"   ${BOLD}---+++--- /etc/hosts ---+++---"${NT}
+    echo -e ${ORANGE}"#####################################"${NT}
+    cat /etc/hosts | grep 127*
+    
+    pause
+    
+   
+    
+}
+
+#this choice will allow the script to change the pi user password
+piPasswordChange()
+{
+    echo "Pi Password change"
+    pause
+}
+
+#this choice will enable SSH by creating an ssh doc in /boot directory
+enableSSH()
+{
+    echo "Enable SSH"
     pause
 }
 
@@ -84,35 +125,37 @@ foxLabMenu()
     clear                     
 
     #FoxLabPi ASCII Art
-    echo -e ${ORANGE}"            *.                  *."
-    echo -e ${ORANGE}"           ***                 ***"
-    echo -e ${ORANGE}"          *****               *****"
-    echo -e ${ORANGE}"         .******             *******"
-    echo -e ${ORANGE}"         ********            ********"
-    echo -e ${ORANGE}"        ,,,,,,,,,***********,,,,,,,,,"
-    echo -e ${ORANGE}"       ,,,,,,,,,,,*********,,,,,,,,,,,"
-    echo -e ${ORANGE}"       .,,,,,,,,,,,*******,,,,,,,,,,,,"
-    echo -e ${ORANGE}"           ,,,,,,,,,*****,,,,,,,,,."
-    echo -e ${ORANGE}"              ,,,,,,,****,,,,,,"
-    echo -e ${ORANGE}"                 .,,,***,,,,"
-    echo -e ${ORANGE}"                     ,*,."
+    echo -e ${ORANGE}"               *.                  *."
+    echo -e ${ORANGE}"              ***                 ***"
+    echo -e ${ORANGE}"             *****               *****"
+    echo -e ${ORANGE}"            .******             *******"
+    echo -e ${ORANGE}"            ********            ********"
+    echo -e ${ORANGE}"           ,,,,,,,,,***********,,,,,,,,,"
+    echo -e ${ORANGE}"          ,,,,,,,,,,,*********,,,,,,,,,,,"
+    echo -e ${ORANGE}"          .,,,,,,,,,,,*******,,,,,,,,,,,,"
+    echo -e ${ORANGE}"              ,,,,,,,,,*****,,,,,,,,,."
+    echo -e ${ORANGE}"                 ,,,,,,,****,,,,,,"
+    echo -e ${ORANGE}"                    .,,,***,,,,"
+    echo -e ${ORANGE}"                        ,*,."
 
-    echo -e ${ORANGE}"    ___           __       _         ${RED}___ _"
-    echo -e ${ORANGE}"   / __\____  __ / /  __ _| |__     ${RED}/ _ (_)"
-    echo -e ${ORANGE}"  / _\/ _ \ \/ // /  / _  |  _ \   ${RED}/ /_)/ |"
-    echo -e ${ORANGE}" / / | (_) >  </ /__| (_| | |_) | ${RED}/ ___/| |"
-    echo -e ${ORANGE}" \/   \___/_/\_\____/\__,_|_.__/  ${RED}\/    |_|"${NT}
+    echo -e ${ORANGE}"       ___           __       _         ${RED}___ _"
+    echo -e ${ORANGE}"      / __\____  __ / /  __ _| |__     ${RED}/ _ (_)"
+    echo -e ${ORANGE}"     / _\/ _ \ \/ // /  / _  |  _ \   ${RED}/ /_)/ |"
+    echo -e ${ORANGE}"    / / | (_) >  </ /__| (_| | |_) | ${RED}/ ___/| |"
+    echo -e ${ORANGE}"    \/   \___/_/\_\____/\__,_|_.__/  ${RED}\/    |_|"${NT}
 
     echo "####################################################"
     echo "  ----+++++++---- FoxLab Pi Menu ----+++++++----    "
     echo "####################################################"
     echo "1) Update System - - - - - - - - - - -(optional)"
-    echo "2) Change Hostname & Password - - - - (Optional)"
-    echo "3) Mount USB Storage - - - - - - - - -(Recommended)"
-    echo "4) Increase STACK size - - - - - - - -(Recommended)"
-    echo "5) Download & install GitLab - - - - -(Necessary)"
-    echo "6) Check that GitLab is running - - - (Optional)"
-    echo "7) Exit"
+    echo "2) Change Hostname - - - - - - - - - -(Optional)"
+    echo "3) Change Pi password - - - - - - - - (Recommended)"
+    echo "4) Enable SSH - - - - - - - - - - - - (Optional)"
+    echo "5) Mount USB Storage - - - - - - - - -(Recommended)"
+    echo "6) Increase STACK size - - - - - - - -(Recommended)"
+    echo "7) Download & install GitLab - - - - -(Necessary)"
+    echo "8) Check that GitLab is running - - - (Optional)"
+    echo "9) Exit"
 }
 
 #this will read the users input
@@ -123,12 +166,14 @@ readOptions()
     case $userChoice in
         1) updateSystem ;;
         2) hostnameChange ;;
-        3) mountStorage ;;
-        4) stackSize ;;
-        5) gitLabInstall ;;
-        6) gitLabCheck ;;
-        7) exit 0 ;;
-        *) echo -e ${BLINK}${REDB}${WHITE}"WARNING${NT}${ORANGE}...You have traveled down the wrong foxhole"${NT} && sleep 6
+        3) piPasswordChange ;;
+        4) enableSSH ;;
+        5) mountStorage ;;
+        6) stackSize ;;
+        7) gitLabInstall ;;
+        8) gitLabCheck ;;
+        9) exit 0 ;;
+        *) echo -e ${BLINK}${REDB}${WHITE}"WARNING${NT}${ORANGE}...You have traveled down the wrong foxhole"${NT} && sleep 3 ;;
     esac
 }
 
