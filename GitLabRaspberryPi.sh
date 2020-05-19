@@ -102,7 +102,7 @@ sudo nano /etc/gitlab/gitlab.rb
 	sidekiq['concurrency'] = 9
 
 	# storing GitLab data in an alternative directory (line 438)
-	git_data_dirs({ "default" => { "path" => "/media/usbstick/git-data" } })
+	git_data_dirs({ "default" => { "path" => "/media/foxlab/git-data" } })
 
 # reconfigure GitLab
 sudo gitlab-ctl reconfigure
