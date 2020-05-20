@@ -46,7 +46,7 @@ hostnameChange()
     echo "Your existing hostname is:" `hostname`
     sleep 1
     read -p "Type what you want your hostname to be: " userChoice
-    hostnamectl set-hostname $userChoice
+    sudo hostnamectl set-hostname $userChoice
     sleep 1
     echo "Hostname set"
     sleep 1
