@@ -66,16 +66,14 @@ hostnameChange()
     echo -e ${ORANGE}"#####################################"${NT}
     cat /etc/hosts | grep 127*
     
-    pause
-    
-   
+    pause 
     
 }
 
 #this choice will allow the script to change the pi user password
 piPasswordChange()
 {
-    echo "Pi Password change"
+    passwd
     pause
 }
 
