@@ -6,7 +6,7 @@
 #colors
 RED='\e[38;5;196m'        #red
 ORANGE='\e[38;5;208m'     #orange
-YELLOW='\e[38;5;93m'      #yellow
+YELLOW='\e[38;5;11m'      #yellow
 WHITE='\e[38;5;15m'       #white
 
 #Background colors
@@ -26,7 +26,7 @@ BLINK='\e[5m'             #blink text
 #this will return the user to the menu
 pause()
 {
-    read -p "Press [Enter] to continue down the foxhole..."
+    read -p $'\e[38;5;208mPress [Enter] to continue down the foxhole...\e[0m'
 }
 
 #this choice will allow the script to update system
@@ -43,28 +43,28 @@ hostnameChange()
     local userChoice=$1
     local userHostname=$(hostname)
 
-    echo "Your existing hostname is:" `hostname`
+    echo -e ${YELLOW}"Your existing hostname is:" `hostname`${NT}
     sleep 1
     read -p "Type what you want your hostname to be: " userChoice
     sudo hostnamectl set-hostname $userChoice
     sleep 1
-    echo "Hostname set"
+    echo -e ${YELLOW}"Hostname set"
     sleep 1
-    echo "changing /etc/hosts..."
+    echo "changing /etc/hosts..."${NT}
     sleep 1
     sudo sed -i "s/$userHostname/$userChoice/g" /etc/hosts
     sleep 1
-    echo "Checking status..."
+    echo ${YELLOW}"Checking status..."${NT}
     sleep 1.5
     
     echo -e ${ORANGE}"#####################################"
-    echo -e ${ORNAGE}"    ${BOLD}---+++--- hostname ---+++---"${NT}
+    echo -e ${YELLOW}"    ${BOLD}---+++--- hostname ---+++---"${NT}
     echo -e ${ORANGE}"#####################################"${NT}
     hostnamectl status | grep host*
     echo -e ${ORANGE}"#####################################"
-    echo -e ${ORNAGE}"   ${BOLD}---+++--- /etc/hosts ---+++---"${NT}
+    echo -e ${YELLOW}"   ${BOLD}---+++--- /etc/hosts ---+++---"${NT}
     echo -e ${ORANGE}"#####################################"${NT}
-    cat /etc/hosts | grep 127*
+    < /etc/hosts grep 127*
     
     pause 
     
@@ -77,25 +77,85 @@ piPasswordChange()
     pause
 }
 
-#this choice will enable SSH by creating an ssh doc in /boot directory
+#this choice will guide the customer to the raspi-config menu to enable SSH
 enableSSH()
 {
-    echo "Enable SSH"
+    echo -e ${ORANGE}"####################################################"
+    echo -e ${RED}" --+++++-- Configure SSH and Localization --+++++--"
+    echo -e ${ORANGE}"####################################################"
+    sleep 1
+    echo -e ${ORANGE}"When the configuration menu opens go to"
+    echo -e ${RED}"5)Interface Options>P2 SSH and enable it"${NT}
+    pause
+    sudo raspi-config
     pause
 }
 
 #this choice will mount usb storage
 mountStorage()
 {
-    echo "Mount Storage"
+    local usbUUID=$1
 
+    echo -e ${YELLOW}"Making directory /media/foxlab..."
+    sudo mkdir /media/foxlab
+    sleep 0.5
+    echo -e ${ORANGE}"done"${NT}
+    sleep 0.5
+    echo -e ${YELLOW}"checking status..."${NT}
+    sleep 0.5
+    ls /media
+    sleep 0.2
+    
+    echo -e ${YELLOW}"Changing owner of /media/foxlab..."
+    sudo chown pi /media/foxlab
+    sleep 0.5
+    echo -e ${ORANGE}"done"${NT}
+    sleep 0.5
+
+    echo -e ${YELLOW}"Formating the USB storage..."
+    sudo sudo mkfs.ext4 /dev/sda1
+    sleep 0.5
+    echo -e ${ORANGE}"done"${NT}
+    sleep 0.5
+
+    echo -e ${YELLOW}"Mounting USB storage to /media/foxlab..."
+    sudo mount /dev/sda1 /media/foxlab
+    sleep 0.5
+    echo -e ${ORANGE}"done"${NT}
+    sleep 0.5
+
+    echo -e ${YELLOW}"FoxLab needs your help grabbing the USB storage UUID..."
+    sleep 2
+    echo -e                      ${ORANGE}"####################################################"
+    echo -e ${BLINK}${REDB}${WHITE}${BOLD} "     copy ONLY what is in quotes after UUID=       "${NT}
+    echo -e                      ${ORANGE}"####################################################"${NT}
+    sleep 3
+    sudo blkid /dev/sda1 | awk '{print $2}'
+    echo -e ${ORANGE}"####################################################"${NT}
+
+    sleep 0.5
+    read -p $'\e[38;5;11mNow insert the UUID here:\e[0m' usbUUID
+    sleep 0.5
+    echo -e $usbUUID ${YELLOW}"was inserted"
+    sleep 1
+    echo -e "Adding UUID to /etc/fstab..."${NT}
+    sleep 0.5
+    echo "UUID="$usbUUID"  /media/foxlab  ext4  defaults  0  0" | sudo tee -a /etc/fstab
+    sleep 1
+    echo -e ${ORANGE}"done"
+    sleep 0.5
+    echo -e ${YELLOW}"Checking status..."${NT}
+    sleep 0.5
+
+    cat /etc/fstab
+    echo -e ${ORANGE}"done"${NT}
     pause
 }
 
 #this choice will increase STACK size
 stackSize()
 {
-    echo STACK Size
+    echo "STACK Size"
 
     pause
 }
@@ -146,8 +206,8 @@ foxLabMenu()
     echo "  ----+++++++---- FoxLab Pi Menu ----+++++++----    "
     echo "####################################################"
     echo "1) Update System - - - - - - - - - - -(optional)"
-    echo "2) Change Hostname - - - - - - - - - -(Optional)"
-    echo "3) Change Pi password - - - - - - - - (Recommended)"
+    echo "2) Change Pi Password - - - - - - - - (Recommended)"
+    echo "3) Change Hostname - - - - - - - - - -(Recommended)"
     echo "4) Enable SSH - - - - - - - - - - - - (Optional)"
     echo "5) Mount USB Storage - - - - - - - - -(Recommended)"
     echo "6) Increase STACK size - - - - - - - -(Recommended)"
@@ -163,15 +223,15 @@ readOptions()
     read -p "Which foxhole do you want to tumble down..." userChoice
     case $userChoice in
         1) updateSystem ;;
-        2) hostnameChange ;;
-        3) piPasswordChange ;;
+        2) piPasswordChange ;;
+        3) hostnameChange ;;
         4) enableSSH ;;
         5) mountStorage ;;
         6) stackSize ;;
         7) gitLabInstall ;;
         8) gitLabCheck ;;
         9) exit 0 ;;
-        *) echo -e ${BLINK}${REDB}${WHITE}"WARNING${NT}${ORANGE}...You have traveled down the wrong foxhole"${NT} && sleep 3 ;;
+        *) echo -e ${BLINK}${REDB}${WHITE}"WARNING${NT}${ORANGE}...You have traveled down the wrong foxhole"${NT} && sleep 4 ;;
     esac
 }
 
