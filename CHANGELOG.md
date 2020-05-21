@@ -1,4 +1,8 @@
 #Changelog
+
+##v0.9.4 (2020-05-20)
+- **ADDED:** USB storage menu option
+
 ##v0.9.3 (2020-05-20)
 - **CHANGED:** position of password change from *3* to *2*
 - **ADDED:** password change menu option
