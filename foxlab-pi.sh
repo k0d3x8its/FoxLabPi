@@ -50,11 +50,11 @@ hostnameChange()
     sleep 1
     echo -e ${YELLOW}"Hostname set"
     sleep 1
-    echo "changing /etc/hosts..."${NT}
+    echo -e "changing /etc/hosts..."${NT}
     sleep 1
     sudo sed -i "s/$userHostname/$userChoice/g" /etc/hosts
     sleep 1
-    echo ${YELLOW}"Checking status..."${NT}
+    echo -e ${YELLOW}"Checking status..."${NT}
     sleep 1.5
     
     echo -e ${ORANGE}"#####################################"
@@ -155,7 +155,37 @@ mountStorage()
 #this choice will increase STACK size
 stackSize()
 {
-    echo "STACK Size"
+    echo -e ${YELLOW}"Checking RAM and swapsize..."
+    sleep 1
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"  ----++++---- Free Memory & Swapsize ----++++----  "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    free --mega | awk '{print (NR==1?"Type":""), $1, $2, $3, (NR==1?"":$4)}' | column -t
+    echo -e ${ORANGE}"####################################################"${NT}
+    pause
+
+    echo -e ${YELLOW}"Changing swapsize to 2048..."${NT}
+    sudo sed -i '16s/.*/CONF_SWAPSIZE=2048/' /etc/dphys-swapfile
+    sleep 1
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Restarting swap..."${NT}
+    sleep 1
+    sudo /etc/init.d/dphys-swapfile restart
+    sleep 0.5
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Checking status..."${NT}
+    sleep 1
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"        ----++++---- Swapsize ----++++----          "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    sed '14,16!d' /etc/dphys-swapfile
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"  ----++++---- Free Memory & Swapsize ----++++----  "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    free --mega | awk '{print (NR==1?"Type":""), $1, $2, $3, (NR==1?"":$4)}' | column -t
+    echo -e ${ORANGE}"####################################################"${NT}
 
     pause
 }
