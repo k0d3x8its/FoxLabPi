@@ -231,7 +231,7 @@ gitLabInstall()
     echo -e ${ORANGE}"done"${NT}
     sleep 1
     echo -e ${YELLOW}"Checking status..."${NT}
-    sleep 
+    sleep 1
     sudo sed '23!d' /etc/gitlab/gitlab.rb
     echo -e ${ORANGE}"done"${NT}
     sleep 1
