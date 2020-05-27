@@ -134,8 +134,7 @@ mountStorage()
     echo -e ${ORANGE}"####################################################"${NT}
 
     sleep 0.5
-    echo ${YELLOW}
-    read -p "Now insert the UUID here:" usbUUID
+    read -p $'\e[38;5;11mNow insert the UUID here:\e[0m' usbUUID
     sleep 0.5
     echo -e $usbUUID ${YELLOW}"was inserted"${NT}
     sleep 1
@@ -200,7 +199,7 @@ gitLabInstall()
     echo -e ${YELLOW}"   ----++++---- Downloading GitLab ----++++----     "${NT}
     echo -e ${ORANGE}"####################################################"${NT}
     sleep 1
-    curl -Lo gitlab-ce_12.6.2-ce.0_armhf.deb https://packages.gitlab.com/gitlab/raspberry-pi2/packages/raspbian/stretch/gitlab-ce_13.0.0-ce.0_armhf.deb/download.deb
+    curl -Lo gitlab-ce_12.6.2-ce.0_armhf.deb https://packages.gitlab.com/gitlab/raspberry-pi2/packages/raspbian/stretch/gitlab-ce_12.6.2-ce.0_armhf.deb/download.deb
 
     echo -e ${ORANGE}"####################################################"${NT}
     echo -e ${YELLOW}"   ----++++---- Installing GitLab ----++++----      "${NT}
@@ -287,8 +286,7 @@ gitLabInstall()
 #this choice will check if gitlab is running
 gitLabCheck()
 {
-    
-
+    sudo gitlab-ctl status 
 
     pause
 }
