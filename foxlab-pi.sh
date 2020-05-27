@@ -8,6 +8,9 @@ RED='\e[38;5;196m'        #red
 ORANGE='\e[38;5;208m'     #orange
 YELLOW='\e[38;5;11m'      #yellow
 WHITE='\e[38;5;15m'       #white
+PURPLE='\e[35m'           #purple
+LITEPURPLE='\e[95m'       #light purple
+LITEGREY='\e[37m'         #light grey
 
 #Background colors
 REDB='\e[41m'             #red
@@ -317,25 +320,25 @@ foxLabMenu()
     echo -e ${ORANGE}"    / / | (_) >  </ /__| (_| | |_) | ${RED}/ ___/| |"
     echo -e ${ORANGE}"    \/   \___/_/\_\____/\__,_|_.__/  ${RED}\/    |_|"${NT}
 
-    echo "####################################################"
-    echo "  ----+++++++---- FoxLab Pi Menu ----+++++++----    "
-    echo "####################################################"
-    echo "1) Update System - - - - - - - - - - -(optional)"
-    echo "2) Change Pi Password - - - - - - - - (Recommended)"
-    echo "3) Change Hostname - - - - - - - - - -(Recommended)"
-    echo "4) Enable SSH - - - - - - - - - - - - (Optional)"
-    echo "5) Mount USB Storage - - - - - - - - -(Recommended)"
-    echo "6) Increase STACK size - - - - - - - -(Recommended)"
-    echo "7) Download & install GitLab - - - - -(Necessary)"
-    echo "8) Check that GitLab is running - - - (Optional)"
-    echo "9) Exit"
+    echo -e ${PURPLE}"####################################################"
+    echo -e "  ${WHITE}----${PURPLE}+++++++${WHITE}---- ${BOLD}${ORANGE}FoxLab ${RED}Pi ${YELLOW}Menu ${NT}${WHITE}----${PURPLE}+++++++${WHITE}----    "
+    echo -e ${PURPLE}"####################################################"${NT}
+    echo -e ${PURPLE}"1${ORANGE}) ${LITEGREY}Update System ${LITEPURPLE}- - - - - - - - - - -${ORANGE}(${YELLOW}optional${ORANGE})"
+    echo -e ${PURPLE}"2${ORANGE}) ${LITEGREY}Change Pi Password ${LITEPURPLE}- - - - - - - - ${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"3${ORANGE}) ${LITEGREY}Change Hostname ${LITEPURPLE}- - - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"4${ORANGE}) ${LITEGREY}Enable SSH ${LITEPURPLE}- - - - - - - - - - - - ${ORANGE}(${YELLOW}Optional${ORANGE})"
+    echo -e ${PURPLE}"5${ORANGE}) ${LITEGREY}Mount USB Storage ${LITEPURPLE}- - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"6${ORANGE}) ${LITEGREY}Increase STACK size ${LITEPURPLE}- - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"7${ORANGE}) ${LITEGREY}Download & install GitLab ${LITEPURPLE}- - - - -${ORANGE}(${RED}Necessary${ORANGE})"
+    echo -e ${PURPLE}"8${ORANGE}) ${LITEGREY}Check that GitLab is running ${LITEPURPLE}- - - ${ORANGE}(${YELLOW}Optional${ORANGE})"
+    echo -e ${PURPLE}"9${ORANGE}) ${LITEGREY}Exit"
 }
 
 #this will read the users input
 readOptions()
 {
     local userChoice
-    read -p "Which foxhole do you want to tumble down..." userChoice
+    read -p $'\e[38;5;208mWhich foxhole do you want to tumble down...\e[0m' userChoice
     case $userChoice in
         1) updateSystem ;;
         2) piPasswordChange ;;
