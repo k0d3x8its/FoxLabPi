@@ -1,15 +1,15 @@
 #Changelog
 
 ##v0.9.8 (2020-05-23)
-- **CHANGED:** change format of git_data_dirs
-- **ADDED:** add download and install GitLab menu option
+- **CHANGED:** format of git_data_dirs
+- **ADDED:** download and install GitLab menu option
 
 ##v0.9.7 (2020-05-22)
-- **ADDED:** add swapsize menu option
+- **ADDED:** swapsize menu option
 
 ##v0.9.6 (2020-05-20)
 - **ADDED:** USB storage menu option
-- **REMOVED:** remove apt from install process in GitLabRaspberryPi.sh
+- **REMOVED:** apt from install process in GitLabRaspberryPi.sh
 
 ##v0.9.5 (2020-05-20)
 - **CHANGED:** position of password change from *3* to *2*
