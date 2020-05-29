@@ -323,7 +323,7 @@ foxLabMenu()
     echo -e ${PURPLE}"####################################################"
     echo -e "  ${WHITE}----${PURPLE}+++++++${WHITE}---- ${BOLD}${ORANGE}FoxLab ${RED}Pi ${YELLOW}Menu ${NT}${WHITE}----${PURPLE}+++++++${WHITE}----    "
     echo -e ${PURPLE}"####################################################"${NT}
-    echo -e ${PURPLE}"1${ORANGE}) ${LITEGREY}Update System ${LITEPURPLE}- - - - - - - - - - -${ORANGE}(${YELLOW}optional${ORANGE})"
+    echo -e ${PURPLE}"1${ORANGE}) ${LITEGREY}Update System ${LITEPURPLE}- - - - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
     echo -e ${PURPLE}"2${ORANGE}) ${LITEGREY}Change Pi Password ${LITEPURPLE}- - - - - - - - ${ORANGE}(${ORANGE}Recommended${ORANGE})"
     echo -e ${PURPLE}"3${ORANGE}) ${LITEGREY}Change Hostname ${LITEPURPLE}- - - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
     echo -e ${PURPLE}"4${ORANGE}) ${LITEGREY}Enable SSH ${LITEPURPLE}- - - - - - - - - - - - ${ORANGE}(${YELLOW}Optional${ORANGE})"
