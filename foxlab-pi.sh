@@ -8,6 +8,9 @@ RED='\e[38;5;196m'        #red
 ORANGE='\e[38;5;208m'     #orange
 YELLOW='\e[38;5;11m'      #yellow
 WHITE='\e[38;5;15m'       #white
+PURPLE='\e[35m'           #purple
+LITEPURPLE='\e[95m'       #light purple
+LITEGREY='\e[37m'         #light grey
 
 #Background colors
 REDB='\e[41m'             #red
@@ -57,11 +60,11 @@ hostnameChange()
     echo ${YELLOW}"Checking status..."${NT}
     sleep 1.5
     
-    echo -e ${ORANGE}"#####################################"
+    echo -e ${ORANGE}"#####################################"${NT}
     echo -e ${YELLOW}"    ${BOLD}---+++--- hostname ---+++---"${NT}
     echo -e ${ORANGE}"#####################################"${NT}
     hostnamectl status | grep host*
-    echo -e ${ORANGE}"#####################################"
+    echo -e ${ORANGE}"#####################################"${NT}
     echo -e ${YELLOW}"   ${BOLD}---+++--- /etc/hosts ---+++---"${NT}
     echo -e ${ORANGE}"#####################################"${NT}
     < /etc/hosts grep 127*
@@ -84,7 +87,7 @@ enableSSH()
     echo -e ${RED}" --+++++-- Configure SSH and Localization --+++++--"
     echo -e ${ORANGE}"####################################################"
     sleep 1
-    echo -e ${ORANGE}"When the configuration menu opens go to"
+    echo -e ${ORANGE}"When the configuration menu opens go to"${NT}
     echo -e ${RED}"5)Interface Options>P2 SSH and enable it"${NT}
     pause
     sudo raspi-config
@@ -124,7 +127,7 @@ mountStorage()
     echo -e ${ORANGE}"done"${NT}
     sleep 0.5
 
-    echo -e ${YELLOW}"FoxLab needs your help grabbing the USB storage UUID..."
+    echo -e ${YELLOW}"FoxLab needs your help grabbing the USB storage UUID..."${NT}
     sleep 2
     echo -e                      ${ORANGE}"####################################################"
     echo -e ${BLINK}${REDB}${WHITE}${BOLD} "     copy ONLY what is in quotes after UUID=       "${NT}
@@ -136,13 +139,13 @@ mountStorage()
     sleep 0.5
     read -p $'\e[38;5;11mNow insert the UUID here:\e[0m' usbUUID
     sleep 0.5
-    echo -e $usbUUID ${YELLOW}"was inserted"
+    echo -e $usbUUID ${YELLOW}"was inserted"${NT}
     sleep 1
     echo -e "Adding UUID to /etc/fstab..."${NT}
     sleep 0.5
     echo "UUID="$usbUUID"  /media/foxlab  ext4  defaults  0  0" | sudo tee -a /etc/fstab
     sleep 1
-    echo -e ${ORANGE}"done"
+    echo -e ${ORANGE}"done"${NT}
     sleep 0.5
     echo -e ${YELLOW}"Checking status..."${NT}
     sleep 0.5
@@ -155,7 +158,14 @@ mountStorage()
 #this choice will increase STACK size
 stackSize()
 {
-    echo "STACK Size"
+    echo -e ${YELLOW}"Checking RAM and swapsize..."${NT}
+    sleep 1
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"  ----++++---- Free Memory & Swapsize ----++++----  "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    free --mega | awk '{print (NR==1?"Type":""), $1, $2, $3, (NR==1?"":$4)}' | column -t
+    echo -e ${ORANGE}"####################################################"${NT}
+    pause
 
     pause
 }
@@ -163,15 +173,100 @@ stackSize()
 #this choice will download GitLab and install
 gitLabInstall()
 {
-    echo "GitLab Download and Install"
+    local userIP=$1
 
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"   ----++++---- Downloading GitLab ----++++----     "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    sleep 1
+    curl -Lo gitlab-ce_12.6.2-ce.0_armhf.deb https://packages.gitlab.com/gitlab/raspberry-pi2/packages/raspbian/stretch/gitlab-ce_12.6.2-ce.0_armhf.deb/download.deb
+
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"   ----++++---- Installing GitLab ----++++----      "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    sleep 1
+    sudo dpkg -i gitlab-ce_12.6.2-ce.0_armhf.deb
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"  ----++++---- GitLab Configuration ----++++----    "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+
+    echo -e ${YELLOW}"Checking IP address..."
+    sleep 1
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${YELLOW}"     ----++++---- Raspberry Pi IP ----++++----      "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo "http://" | hostname -I
+    echo -e ${ORANGE}"####################################################"${NT}
+    echo -e ${BLINK}${REDB}${WHITE}${BOLD}"  COPY the IP address above with http:// before it  "${NT}
+    echo -e ${ORANGE}"####################################################"${NT}
+    sleep 1
+
+    read -p $'\e[38;5;11mInsert the IP address here:\e[0m' userIP
+    sleep 1
+    echo -e $userIP ${YELLOW}"was inserted"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Adding IP address to /etc/gitlab/gitlab.rb..."${NT}
+    sleep 1
+    sudo sed -i "s,http://gitlab.example.com,$userIP,g" /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Checking status..."${NT}
+    sleep 1
+    sudo sed '23!d' /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+
+    echo -e ${YELLOW}"Changing unicorn worker processes to 2..."
+    sleep 1
+    sudo sed -i "750 s/.*/unicorn['worker_processes'] = 2/" /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Checking status..."${NT}
+    sleep 1
+    sudo sed '750!d' /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+
+    echo -e ${YELLOW}"Changing the amount of concurrency in your Sidekiq process..."
+    sleep 1
+    sudo sed -i "814 s/.*/sidekiq['concurrency'] = 9/" /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Checking status..."${NT}
+    sleep 1
+    sudo sed '814!d' /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+
+    echo -e ${YELLOW}"Changing where GitLab data is stored..."
+    sleep 1
+    sudo sed -i '438 s,#, ,' /etc/gitlab/gitlab.rb
+    sudo sed -i '439 s,#, ,' /etc/gitlab/gitlab.rb
+    sudo sed -i '440 s,.*,     "path" => "/media/foxlab/git-data",' /etc/gitlab/gitlab.rb
+    sudo sed -i '441 s,#, ,' /etc/gitlab/gitlab.rb
+    sudo sed -i '442 s,#, ,' /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+    echo -e ${YELLOW}"Checking status..."${NT}
+    sleep 1
+    sudo sed '438,442!d' /etc/gitlab/gitlab.rb
+    echo -e ${ORANGE}"done"${NT}
+    sleep 1
+
+    echo -e ${YELLOW}"If everything above looks good then"
+    echo -e ${YELLOW}"continue down the fox hole otherwise"
+    echo -e ${YELLOW}"press [CTL+C] to end the program"
+    pause
+    echo -e ${YELLOW}"Reconfiguring /etc/gitlab/gitlab.rb..."
+    sudo gitlab-ctl reconfigure
+    echo -e ${ORANGE}"done"${NT}
     pause
 }
 
 #this choice will check if gitlab is running
 gitLabCheck()
 {
-    echo "GitLab Check"
+    sudo gitlab-ctl status 
 
     pause
 }
@@ -202,25 +297,25 @@ foxLabMenu()
     echo -e ${ORANGE}"    / / | (_) >  </ /__| (_| | |_) | ${RED}/ ___/| |"
     echo -e ${ORANGE}"    \/   \___/_/\_\____/\__,_|_.__/  ${RED}\/    |_|"${NT}
 
-    echo "####################################################"
-    echo "  ----+++++++---- FoxLab Pi Menu ----+++++++----    "
-    echo "####################################################"
-    echo "1) Update System - - - - - - - - - - -(optional)"
-    echo "2) Change Pi Password - - - - - - - - (Recommended)"
-    echo "3) Change Hostname - - - - - - - - - -(Recommended)"
-    echo "4) Enable SSH - - - - - - - - - - - - (Optional)"
-    echo "5) Mount USB Storage - - - - - - - - -(Recommended)"
-    echo "6) Increase STACK size - - - - - - - -(Recommended)"
-    echo "7) Download & install GitLab - - - - -(Necessary)"
-    echo "8) Check that GitLab is running - - - (Optional)"
-    echo "9) Exit"
+    echo -e ${PURPLE}"####################################################"
+    echo -e "  ${WHITE}----${PURPLE}+++++++${WHITE}---- ${BOLD}${ORANGE}FoxLab ${RED}Pi ${YELLOW}Menu ${NT}${WHITE}----${PURPLE}+++++++${WHITE}----    "
+    echo -e ${PURPLE}"####################################################"${NT}
+    echo -e ${PURPLE}"1${ORANGE}) ${LITEGREY}Update System ${LITEPURPLE}- - - - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"2${ORANGE}) ${LITEGREY}Change Pi Password ${LITEPURPLE}- - - - - - - - ${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"3${ORANGE}) ${LITEGREY}Change Hostname ${LITEPURPLE}- - - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"4${ORANGE}) ${LITEGREY}Enable SSH ${LITEPURPLE}- - - - - - - - - - - - ${ORANGE}(${YELLOW}Optional${ORANGE})"
+    echo -e ${PURPLE}"5${ORANGE}) ${LITEGREY}Mount USB Storage ${LITEPURPLE}- - - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"6${ORANGE}) ${LITEGREY}Increase STACK size ${LITEPURPLE}- - - - - - - -${ORANGE}(${ORANGE}Recommended${ORANGE})"
+    echo -e ${PURPLE}"7${ORANGE}) ${LITEGREY}Download & install GitLab ${LITEPURPLE}- - - - -${ORANGE}(${RED}Necessary${ORANGE})"
+    echo -e ${PURPLE}"8${ORANGE}) ${LITEGREY}Check that GitLab is running ${LITEPURPLE}- - - ${ORANGE}(${YELLOW}Optional${ORANGE})"
+    echo -e ${PURPLE}"9${ORANGE}) ${LITEGREY}Exit"
 }
 
 #this will read the users input
 readOptions()
 {
     local userChoice
-    read -p "Which foxhole do you want to tumble down..." userChoice
+    read -p $'\e[38;5;208mWhich foxhole do you want to tumble down...\e[0m' userChoice
     case $userChoice in
         1) updateSystem ;;
         2) piPasswordChange ;;

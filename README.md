@@ -1,47 +1,24 @@
-# Part 1: Installation of GitLab CE on a Raspberry Pi 4 (4GB)
-- Install GitLab on a Raspberry Pi 4
-- Configure the GitLab server
+# Foxlab Pi Installer for GitLab CE on a Raspberry Pi 4 (4GB)
+This shell script will automate the process of installing GitLab CE 12.6.2 for the Raspberry Pi as well as configuring the install so that it will run properly. The [FoxLab Pi Wiki]() has manual instructions for installing GitLab CE 12.6.2 as well as a [video tutorial]() provided by Mikrocontoller Projekte.
+ 
 <br>  
-Download Instructions here: https://github.com/MikrocontollerProjekte/GitLabRaspberryPi/blob/master/GitLabRaspberryPi.sh
 <br>
-<br>
-<b>Full YouTube video tutorial:</b>
-<br>
-<br>
-
-[![YouTube Video](http://img.youtube.com/vi/VVp0buV-wVM/0.jpg)](http://www.youtube.com/watch?v=VVp0buV-wVM "Installation of GitLab CE on a Raspberry Pi 4 (4GB)")
-
-
-<br>
-<br>
-<br>
-<img src="images/part1.png" width="900">
-<br>
-
-<br>
-<br>
-<br>
-
-# Part 2: Usage of GitLab CE on a Raspberry Pi 4 (4GB)
-- Generate a SSH key pair for authentication
-- Create and push a project to your GitLab server
-- Clone a project from your GitLab server
-- Issues and merge requests example
 <br>  
-Download Instructions here: https://github.com/MikrocontollerProjekte/GitLabRaspberryPi/blob/master/GitLabRaspberryPi.sh
+<br>
+<br>  
+<br>
+<br>  
 <br>
 <br>
-<b>Full YouTube video tutorial:</b>
+<br>  
+<br>  
 <br>
+<br>  
 <br>
-
-[![YouTube Video](http://img.youtube.com/vi/hLQXLQj44gQ/0.jpg)](http://www.youtube.com/watch?v=hLQXLQj44gQ "Usage of GitLab CE on a Raspberry Pi 4 (4GB)")
-
-
+<br>  
 <br>
+<br>  
 <br>
+<br>  
 <br>
-<img src="images/part2.png" width="900">
-<br>
-
-For more videos, visit: https://www.youtube.com/c/MikrocontrollerProjekte.
+A big thanks goes out to [Mikrocontoller Projekte](https://github.com/MikrocontollerProjekte) for creating the [GitLab Raspberry Pi](https://github.com/MikrocontollerProjekte/GitLabRaspberryPi). 

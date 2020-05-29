@@ -87,7 +87,7 @@ free -m
 curl -Lo gitlab-ce_12.6.2-ce.0_armhf.deb https://packages.gitlab.com/gitlab/raspberry-pi2/packages/raspbian/stretch/gitlab-ce_12.6.2-ce.0_armhf.deb/download.deb
 
 # install the downloaded package
-sudo apt dpkg -i gitlab-ce_12.6.2-ce.0_armhf.deb
+sudo dpkg -i gitlab-ce_12.6.2-ce.0_armhf.deb
 
 # modify gitlab.rb configuration
 sudo nano /etc/gitlab/gitlab.rb
@@ -102,7 +102,9 @@ sudo nano /etc/gitlab/gitlab.rb
 	sidekiq['concurrency'] = 9
 
 	# storing GitLab data in an alternative directory (line 438)
-	git_data_dirs({ "default" => { "path" => "/media/foxlab/git-data" } })
+	git_data_dirs({ 
+		"default" => { 
+		  "path" => "/media/foxlab/git-data" } })
 
 # reconfigure GitLab
 sudo gitlab-ctl reconfigure
