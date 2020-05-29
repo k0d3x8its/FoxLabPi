@@ -1,5 +1,8 @@
 #Changelog
 
+##v0.9.8 (2020-05-27)
+- **ADDED:** wiki for help with installation manually as well as for using FoxLab Pi
+
 ##v0.9.8 (2020-05-23)
 - **CHANGED:** format of git_data_dirs
 - **ADDED:** download and install GitLab menu option
@@ -24,7 +27,7 @@
 - **CHANGED:** shell script from FoxLabPi.sh to foxlab-pi.sh
 - **ADDED:** menu framework in FoxLabPi.sh
 
-##v0.9.2 (2020-05-09)
+##v0.9.2a (2020-05-09)
 - **ADDED:** fox ascii art to FoxLabPi.sh
 
 ##v0.9.1a (2020-05-08)
