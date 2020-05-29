@@ -11,7 +11,7 @@ This shell script will automate the process of installing GitLab CE 12.6.2 for t
 <br>
 <br>
 <br>  
-![](https://github.com/k0d3x8its/FoxLabPi/blob/develop/images/FoxLab-Pi_Menu.png)
+![FoxLab Pi Menu](https://github.com/k0d3x8its/FoxLabPi/blob/develop/images/FoxLab-Pi_Menu.png)
 <br>  
 <br>
 <br>  
