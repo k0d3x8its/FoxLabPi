@@ -1,6 +1,6 @@
 #Changelog
 
-##v0.9.8 (2020-05-27)
+##v1.0.0 (2020-05-27)
 - **ADDED:** wiki for help with installation manually as well as for using FoxLab Pi
 
 ##v0.9.8 (2020-05-23)
