@@ -3,4 +3,4 @@ This shell script will automate the process of installing GitLab CE 12.6.2 for t
 <br> 
 
 <br>
-A big thanks goes out to [Mikrocontoller Projekte]() for creating the [GitLab Raspberry Pi](). 
+A big thanks goes out to <a href="https://github.com/MikrocontollerProjekte">Mikrocontoller Projekte</a> for creating the <a href="https://github.com/MikrocontollerProjekte/GitLabRaspberryPi">GitLab Raspberry Pi</a>. 
