@@ -1,6 +1,12 @@
 #Changelog
 
-##v1.0.0 (2020-05-27)
+##v1.0.0 (2020-05-28)
+- **ADDED:** color to the menu
+- **REMOVED:** GitLabRaspberryPi.sh file
+- **REMOVED:** image part1.png
+- **REMOVED:** image part2.png
+
+##v0.9.9 (2020-05-27)
 - **ADDED:** wiki for help with installation manually as well as for using FoxLab Pi
 
 ##v0.9.8 (2020-05-23)
