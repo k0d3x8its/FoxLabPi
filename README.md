@@ -5,4 +5,4 @@ This shell script will automate the process of installing GitLab CE 12.6.2 for t
 <img align="center" src="https://github.com/k0d3x8its/FoxLabPi/blob/master/images/FoxLab-Pi_Menu.png"> 
 <br>
 
-A big thanks goes out to <a href="https://github.com/MikrocontollerProjekte">Mikrocontoller Projekte</a> for creating the <a href="https://github.com/MikrocontollerProjekte/GitLabRaspberryPi">GitLab Raspberry Pi</a>. 
+A big thanks goes out to <a href="https://github.com/MikrocontollerProjekte">Mikrocontoller Projekte</a> for creating the <a href="https://github.com/MikrocontollerProjekte/GitLabRaspberryPi">GitLabRaspberryPi</a>. 
