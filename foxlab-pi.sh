@@ -171,7 +171,7 @@ stackSize()
 }
 
 #this choice will download GitLab and install
-gitLabInstall()
+gitLabInstall() 
 {
     local userIP=$1
 
