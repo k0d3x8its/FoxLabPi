@@ -53,11 +53,11 @@ hostnameChange()
     sleep 1
     echo -e ${YELLOW}"Hostname set"
     sleep 1
-    echo "changing /etc/hosts..."${NT}
+    echo -e "changing /etc/hosts..."${NT}
     sleep 1
     sudo sed -i "s/$userHostname/$userChoice/g" /etc/hosts
     sleep 1
-    echo ${YELLOW}"Checking status..."${NT}
+    echo -e ${YELLOW}"Checking status..."${NT}
     sleep 1.5
     
     echo -e ${ORANGE}"#####################################"${NT}
